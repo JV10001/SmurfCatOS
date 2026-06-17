@@ -1,19 +1,139 @@
 <!doctype html>
+
 <html>
-  <body>
-    <h1>Welcome to SmurfCatOS</h1>
-    <h2>
-      I like smurf cat a lot and I like cats too! I own 3 cats and they are very
-      cool so umm yeah. I will also put a link to one of my
-      <strong>FAVORITE VIDEOS!!!</strong>
-    </h2>
-    <a href="https://youtu.be/dQw4w9WgXcQ?si=xBGfTM3wl5cQ7V3Z"
-      >Coolest video ever!!!</a
+  <head>
+    <script type="module" src="./script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body
+    style="
+      background-image: url(./images-5.png);
+      background-size: cover;
+      margin: 0;
+    "
+  >
+    <div
+      style="
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        display: flex;
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.125);
+        color: #fff;
+        justify-content: space-between;
+        gap: 32px;
+      "
     >
-    <p>Hello People on my OS!</p>
-    <img
-      style="border-radius: 50%; width: 192px; height: 192px"
-      src="https://thebigsmoke.com.au/wp-content/uploads/Smurf-cat-Shailushai-1.jpg"
-    />
+      <p
+        style="
+          margin-left: 16px;
+          font-weight: 700;
+          background-color: rgba(255, 255, 255, 0.25);
+          padding: 4px 12px;
+          border-radius: 12px;
+        "
+      >
+        SmurfCatOS
+      </p>
+
+      <p
+        style="
+          margin-left: 16px;
+          font-weight: 700;
+          background-color: rgba(255, 255, 255, 0.25);
+          padding: 4px 12px;
+          border-radius: 12px;
+        "
+      >
+        chilling
+      </p>
+
+      <p
+        style="
+          margin-right: 16px;
+          font-weight: 700;
+          background-color: rgba(255, 255, 255, 0.25);
+          padding: 4px 12px;
+          border-radius: 12px;
+        "
+        id="timeElement"
+      >
+        Time
+      </p>
+    </div>
+
+    <div style="position: fixed; bottom: 16px; left: 16px; z-index: 999">
+      <p style="cursor: pointer" id="welcomeopen">
+        <img
+          style="border-radius: 50%; width: 48px; height: 48px"
+          src="images-7.jpeg"
+          alt="Open Window"
+        />
+      </p>
+    </div>
+
+    <div
+      id="window"
+      style="
+        border: 4mm ridge rgb(83, 131, 226);
+        width: 600px;
+        border-radius: 16px;
+        padding: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: rgba(45, 163, 241, 0.85);
+      "
+    >
+      <div class="windowheader" id="windowheader">
+        <p class="headertext">
+          <img
+            style="border-radius: 50%; height: 32px; width: 32px"
+            src="images-3.png"
+            alt="smurfcat king"
+          />
+        </p>
+
+        <p style="cursor: pointer; margin: 0" id="welcomeclose">
+          <img
+            style="border-radius: 50%; width: 32px; height: 32px"
+            src="images-6.jpeg"
+            alt="Close Window"
+          />
+        </p>
+      </div>
+
+      <h1>Welcome to SmurfCatOS</h1>
+
+      <img
+        style="border-radius: 50%; width: 128px; height: 128px"
+        src="https://thebigsmoke.com.au/wp-content/uploads/Smurf-cat-Shailushai-1.jpg"
+        alt="Smurf Cat"
+      />
+
+      <h2>
+        I like smurf cat a lot and I like cats too! I own 3 cats and they are
+        very cool so umm yeah. I will also put a link to one of my
+        <strong>FAVORITE VIDEOS!!!</strong>
+      </h2>
+
+      <a href="https://youtu.be/dQw4w9WgXcQ?si=xBGfTM3wl5cQ7V3Z">
+        Coolest video ever!!!
+      </a>
+
+      <p>I also own a fish!</p>
+    </div>
+    <script>
+      function updateTime() {
+        var SmurfCatTime = new Date().toLocaleString();
+        var timeText = document.querySelector("#timeElement");
+        timeText.innerHTML = SmurfCatTime;
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
   </body>
 </html>
