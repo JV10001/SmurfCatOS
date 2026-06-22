@@ -1,8 +1,8 @@
 <!doctype html>
-
 <html>
   <head>
-    <script type="module" src="./script.js"></script>
+    <title>SmurfCatOS</title>
+    <script src="./script.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
 
@@ -14,6 +14,7 @@
     "
   >
     <div
+      id="top"
       style="
         position: absolute;
         width: 100%;
@@ -22,7 +23,7 @@
         display: flex;
         backdrop-filter: blur(10px);
         background-color: rgba(0, 0, 0, 0.125);
-        color: #fff;
+        color: #93d9f3;
         justify-content: space-between;
         gap: 32px;
       "
@@ -31,7 +32,7 @@
         style="
           margin-left: 16px;
           font-weight: 700;
-          background-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.25);
           padding: 4px 12px;
           border-radius: 12px;
         "
@@ -43,7 +44,7 @@
         style="
           margin-left: 16px;
           font-weight: 700;
-          background-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.25);
           padding: 4px 12px;
           border-radius: 12px;
         "
@@ -52,27 +53,195 @@
       </p>
 
       <p
+        id="timeElement"
         style="
           margin-right: 16px;
           font-weight: 700;
-          background-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.25);
           padding: 4px 12px;
           border-radius: 12px;
         "
-        id="timeElement"
       >
         Time
       </p>
     </div>
 
-    <div style="position: fixed; bottom: 16px; left: 16px; z-index: 999">
-      <p style="cursor: pointer" id="welcomeopen">
+    <div
+      id="notes"
+      style="
+        display: none;
+        border: 4mm ridge rgb(83, 131, 226);
+        width: 800px;
+        border-radius: 16px;
+        padding: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: rgba(45, 163, 241, 0.85);
+      "
+    >
+      <div id="notesheader" class="windowheader">
         <img
-          style="border-radius: 50%; width: 48px; height: 48px"
-          src="images-7.jpeg"
-          alt="Open Window"
+          src="images-3.png"
+          style="width: 32px; height: 32px; border-radius: 50%"
         />
-      </p>
+        <img
+          id="notesclose"
+          src="images-6.jpeg"
+          style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer"
+        />
+      </div>
+
+      <div
+        style="
+          background: #0459f6;
+          margin-top: 16px;
+          border-radius: 12px;
+          height: 480px;
+          padding: 16px;
+          font-family:
+            Courier New,
+            monospace;
+          display: flex;
+          gap: 16px;
+          box-sizing: border-box;
+        "
+      >
+        <div
+          style="
+            width: 180px;
+            background: #2391f7;
+            padding: 16px;
+            border-radius: 16px;
+            flex-shrink: 0;
+          "
+        >
+          <p style="margin: 0; font-weight: bold">Welcome</p>
+          <p id="notebookDate" style="margin: 0; font-size: 12px"></p>
+        </div>
+
+        <div style="flex: 1; overflow-y: auto">
+          <div id="noteEditor">
+            <h2>SmurfCat Notebook</h2>
+
+            <img src="images-3.png" style="width: 96px; border-radius: 16px" />
+
+            <p>Welcome to your SmurfCat notes. Write anything here.</p>
+            <div id="editorContent" contenteditable="true">
+              <blockquote
+                contenteditable="true"
+                style="
+                  background: #2391f7;
+                  padding: 16px;
+                  border-radius: 16px;
+                  margin: 16px 0;
+                "
+              >
+                <i>
+                  We live, we love, we lie.<br />
+                  ~ Smurf Cat
+                </i>
+              </blockquote>
+            </div>
+            <p>Cat names, cat jokes, or random thoughts all go here!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="desktopApps" style="padding-top: 64px; padding-left: 16px">
+      <div
+        id="notebookIcon"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 16px;
+          filter: drop-shadow(0 0 8px black);
+          width: fit-content;
+          cursor: pointer;
+        "
+      >
+        <img
+          src="Screenshot 2026-06-17 at 4.11.57 PM.png"
+          style="width: 64px; height: 64px; border-radius: 16px; display: block"
+        />
+        <p style="margin: 0; color: #24e2ff">SmurfCat Notebook</p>
+      </div>
+    </div>
+    <div id="desktopApps" style="padding-top: 64px; padding-left: 16px">
+      <div
+        id="clickerIcon"
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 16px;
+          filter: drop-shadow(0 0 8px black);
+          width: fit-content;
+          cursor: pointer;
+        "
+      >
+        <img
+          src="images-8.jpeg"
+          style="width: 64px; height: 64px; border-radius: 16px; display: block"
+        />
+        <p style="margin: 0; color: #24e2ff">SmurfCat Clicker</p>
+      </div>
+    </div>
+    <div
+      id="clicker"
+      style="
+        display: none;
+        border: 4mm ridge rgb(83, 131, 226);
+        width: 400px;
+        border-radius: 16px;
+        padding: 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: rgba(45, 163, 241, 0.85);
+      "
+    >
+      <div id="clickerheader" class="windowheader">
+        <img
+          src="images-3.png"
+          style="width: 32px; height: 32px; border-radius: 50%"
+        />
+        <img
+          id="clickerclose"
+          src="images-6.jpeg"
+          style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer"
+        />
+      </div>
+
+      <h2>SmurfCat Clicker</h2>
+
+      <button id="clickBtn" style="padding: 8px; cursor: pointer">
+        <img
+          style="width: 64px"
+          src="Screenshot 2026-06-22 at 4.37.46 PM.png"
+        />
+      </button>
+
+      <p>Clicks: <span id="clickCount">0</span></p>
+    </div>
+    <div style="position: fixed; bottom: 16px; left: 16px; z-index: 999">
+      <img
+        id="welcomeopen"
+        src="images-7.jpeg"
+        style="
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: block;
+        "
+      />
     </div>
 
     <div
@@ -88,49 +257,40 @@
         background: rgba(45, 163, 241, 0.85);
       "
     >
-      <div class="windowheader" id="windowheader">
-        <p class="headertext">
-          <img
-            style="border-radius: 50%; height: 32px; width: 32px"
-            src="images-3.png"
-            alt="smurfcat king"
-          />
-        </p>
-
-        <p style="cursor: pointer; margin: 0" id="welcomeclose">
-          <img
-            style="border-radius: 50%; width: 32px; height: 32px"
-            src="images-6.jpeg"
-            alt="Close Window"
-          />
-        </p>
+      <div id="windowheader" class="windowheader">
+        <img
+          src="images-3.png"
+          style="width: 32px; height: 32px; border-radius: 50%"
+        />
+        <img
+          id="welcomeclose"
+          src="images-6.jpeg"
+          style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer"
+        />
       </div>
 
       <h1>Welcome to SmurfCatOS</h1>
 
       <img
-        style="border-radius: 50%; width: 128px; height: 128px"
         src="https://thebigsmoke.com.au/wp-content/uploads/Smurf-cat-Shailushai-1.jpg"
-        alt="Smurf Cat"
+        style="width: 128px; height: 128px; border-radius: 50%"
       />
 
-      <h2>
-        I like smurf cat a lot and I like cats too! I own 3 cats and they are
-        very cool so umm yeah. I will also put a link to one of my
-        <strong>FAVORITE VIDEOS!!!</strong>
-      </h2>
+      <p>
+        I like cats, and I have 3 cats actually so yeah feel free to look
+        around.
+      </p>
 
       <a href="https://youtu.be/dQw4w9WgXcQ?si=xBGfTM3wl5cQ7V3Z">
-        Coolest video ever!!!
+        Cool video
       </a>
-
-      <p>I also own a fish!</p>
+      <p>p.s. you should click on the link😀</p>
     </div>
+
     <script>
       function updateTime() {
-        var SmurfCatTime = new Date().toLocaleString();
-        var timeText = document.querySelector("#timeElement");
-        timeText.innerHTML = SmurfCatTime;
+        document.querySelector("#timeElement").textContent =
+          new Date().toLocaleString();
       }
       updateTime();
       setInterval(updateTime, 1000);
