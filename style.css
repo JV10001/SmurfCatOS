@@ -12,3 +12,9 @@
   color: #fff;
   font-weight: 500
 }
+.selected {
+  border: 2px solid #4da3ff;
+  border-radius: 12px;
+  background-color: rgba(77, 163, 255, 0.25);
+  width: fit-content;
+}
