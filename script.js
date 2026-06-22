@@ -1,82 +1,204 @@
-// Make the DIV element draggable:
+const STORAGE_KEY = "smurfcat-notes";
+
+let biggestIndex = 1;
+
 window.onload = function () {
-    const win = document.getElementById("window");
+  const win = document.getElementById("window");
+  const notes = document.getElementById("notes");
+  const clicker = document.getElementById("clicker");
 
-    win.style.position = "absolute";
-   win.style.left =
-  (window.innerWidth - win.offsetWidth) / 2 + "px";
+  centerWindow(win);
 
-win.style.top =
-  (window.innerHeight - win.offsetHeight) / 2 + "px";
+  dragElement(win);
+  dragElement(notes);
+  dragElement(clicker);
 
-    dragElement(win);
+  setupWindows();
+  setupNotes();
+  setupClicker();
 };
 
-// Step 1: Define a function called `dragElement` that makes an HTML element draggable.
+function centerWindow(el) {
+  if (!el) return;
+
+  el.style.position = "absolute";
+  el.style.left =
+    (window.innerWidth - el.offsetWidth) / 2 + "px";
+  el.style.top =
+    (window.innerHeight - el.offsetHeight) / 2 + "px";
+}
+
 function dragElement(element) {
-  // Step 2: Set up variables to keep track of the element's position.
-  var initialX = 0;
-  var initialY = 0;
-  var currentX = 0;
-  var currentY = 0;
+  if (!element) return;
 
-  // Step 3: Check if there is a special header element associated with the draggable element.
-  if (document.getElementById(element.id + "header")) {
-    // Step 4: If present, assign the `dragMouseDown` function to the header's `onmousedown` event.
-    // This allows you to drag the window around by its header.
-    document.getElementById(element.id + "header").onmousedown = startDragging;
-  } else {
-    // Step 5: If not present, assign the function directly to the draggable element's `onmousedown` event.
-    // This allows you to drag the window by holding down anywhere on the window.
-    element.onmousedown = startDragging;
-  }
+  let startX = 0;
+  let startY = 0;
 
-  // Step 6: Define the `startDragging` function to capture the initial mouse position and set up event listeners.
+  const header =
+    document.getElementById(element.id + "header");
+
+  const dragTarget = header || element;
+
+  dragTarget.onmousedown = startDragging;
+
   function startDragging(e) {
-    e = e || window.event;
     e.preventDefault();
-    // Step 7: Get the mouse cursor position at startup.
-    initialX = e.clientX;
-    initialY = e.clientY;
-    // Step 8: Set up event listeners for mouse movement (`elementDrag`) and mouse button release (`closeDragElement`).
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    bringToFront(element);
+
+    document.onmousemove = dragMove;
     document.onmouseup = stopDragging;
-    document.onmousemove = elementDrag;
   }
 
-  // Step 9: Define the `elementDrag` function to calculate the new position of the element based on mouse movement.
-   function elementDrag(e){
-    e = e || window.event;
+  function dragMove(e) {
     e.preventDefault();
-    // Step 10: Calculate the new cursor position.
-    currentX = initialX - e.clientX;
-    currentY = initialY - e.clientY;
-    initialX = e.clientX;
-    initialY = e.clientY;
-    // Step 11: Update the element's new position by modifying its `top` and `left` CSS properties.
-    element.style.top = (element.offsetTop - currentY) + "px";
-    element.style.left = (element.offsetLeft - currentX) + "px";
+
+    const dx = startX - e.clientX;
+    const dy = startY - e.clientY;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    element.style.left =
+      element.offsetLeft - dx + "px";
+    element.style.top =
+      element.offsetTop - dy + "px";
   }
 
-  // Step 12: Define the `stopDragging` function to stop tracking mouse movement by removing the event listeners.
   function stopDragging() {
-    document.onmouseup = null;
     document.onmousemove = null;
+    document.onmouseup = null;
   }
 }
-var welcomeScreen = document.querySelector("#window")
-function closeWindow(element) {
-  element.style.display = "none"
-}
-function openWindow(element) {
-  element.style.display = "block"
-}
-var welcomeScreenClose = document.querySelector("#welcomeclose")
 
-var welcomeScreenOpen = document.querySelector("#welcomeopen")
-welcomeScreenClose.addEventListener("click", () => {
-  welcomeScreen.style.display = "none";
-});
+function bringToFront(el) {
+  biggestIndex++;
+  el.style.zIndex = biggestIndex;
+}
 
-welcomeScreenOpen.addEventListener("click", () => {
-  welcomeScreen.style.display = "block";
-});
+function openWindow(el) {
+  if (!el) return;
+
+  el.style.display = "block";
+
+  bringToFront(el);
+
+  centerWindow(el);
+}
+
+function closeWindow(el) {
+  if (!el) return;
+  el.style.display = "none";
+}
+
+function setupWindows() {
+  const welcome = document.getElementById("window");
+  const notes = document.getElementById("notes");
+
+  const welcomeOpen =
+    document.getElementById("welcomeopen");
+  const welcomeClose =
+    document.getElementById("welcomeclose");
+
+  const notesClose =
+    document.getElementById("notesclose");
+
+  const notebookIcon =
+    document.getElementById("notebookIcon");
+
+  welcomeOpen?.addEventListener("click", () => {
+    openWindow(welcome);
+  });
+
+  welcomeClose?.addEventListener("click", () => {
+    closeWindow(welcome);
+  });
+
+  welcome?.addEventListener("mousedown", () => {
+    bringToFront(welcome);
+  });
+
+  notebookIcon?.addEventListener("click", () => {
+     notebookIcon.classList.add("selected");
+    openWindow(notes);
+  });
+
+  notesClose?.addEventListener("click", () => {
+    notebookIcon.classList.remove("selected");
+    closeWindow(notes);
+  });
+
+  notes?.addEventListener("mousedown", () => {
+    bringToFront(notes);
+  });
+}
+
+function setupClicker() {
+  const clicker = document.getElementById("clicker");
+  const icon = document.getElementById("clickerIcon");
+  const close = document.getElementById("clickerclose");
+
+  const btn = document.getElementById("clickBtn");
+  const countEl = document.getElementById("clickCount");
+
+  let count = Number(localStorage.getItem("smurfcat-clicks")) || 0;
+
+  if (countEl) {
+    countEl.textContent = count;
+  }
+
+  icon?.addEventListener("click", () => {
+    icon.classList.add("selected");
+    openWindow(clicker);
+  });
+
+  close?.addEventListener("click", () => {
+    icon.classList.remove("selected");
+    closeWindow(clicker);
+  });
+
+  clicker?.addEventListener("mousedown", () => {
+    bringToFront(clicker);
+  });
+
+  btn?.addEventListener("click", () => {
+    count++;
+    countEl.textContent = count;
+
+    localStorage.setItem("smurfcat-clicks", count);
+  });
+}
+
+function setupNotes() {
+  const editor = document.getElementById("editorContent");
+  const dateEl = document.getElementById("notebookDate");
+
+  if (!editor) {
+    console.log("No editor found");
+    return;
+  }
+
+  const saved = localStorage.getItem("smurfcat-notes");
+  if (saved) {
+    editor.innerHTML = saved;
+  }
+
+  editor.addEventListener("input", () => {
+    console.log("saving...");
+    localStorage.setItem("smurfcat-notes", editor.innerHTML);
+
+    if (dateEl) {
+      const now = new Date().toLocaleString();
+      dateEl.textContent = "Last edited: " + now;
+      localStorage.setItem("smurfcat-last", now);
+    }
+  });
+
+  const last = localStorage.getItem("smurfcat-last");
+  if (last && dateEl) {
+    dateEl.textContent = "Last edited: " + last;
+  }
+}
